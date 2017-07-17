@@ -10,24 +10,26 @@ def column_number_to_excel_index(col_number):
     return col_label
 
 def excel_index_to_number(excel_column):
-    # take the left most letter, pop it out, multiply it by 26 * the length -1
-    # e.g. AB -> pop A -> A is worth 26*1 + ord(Z) - ord(A)
-    # leaves B
-    # pop B -> B = 26 * 0 + ord(Z) - ord(B) = 2
+    # take the left most letter, pop it out, get it's value (base 26 to decimal)
     excel_column = list(excel_column)
     result = 0
     while excel_column:
-        val = excel_column.pop(0) # get the leftmost letter
+        left_letter = excel_column.pop(0) # get the leftmost letter
+        letter_value = ord(left_letter) - ord('A') 
         if len(excel_column): 
-
-            result += 26 * len(excel_column) * (ord(val) - ord('A') + 1)
+            result += 26 ** len(excel_column) * (letter_value + 1)
         else:
-            result += ord(val) - ord('A')
-            
-    return(result)
+            result += letter_value + 1
+    # result is one indexed, like Excel & VBA        
+    return result
+
+def column_difference(col1,col2):
+    # returns the number of columns between 2 excel indices
+    return abs(excel_index_to_number(col1) - excel_index_to_number(col2))
 
 if __name__ == '__main__':
-    input_col = input('Enter in an Excel column:')
+    
+    input_col = input('Enter in an Excel column:').upper().strip()
     # excel_index = column_number_to_excel_index(input_col)
     numerical_index = excel_index_to_number(input_col)
     print(numerical_index)
