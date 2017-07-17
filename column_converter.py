@@ -1,4 +1,4 @@
-# from number to default excel index (e.g A -> 1, AA -> 21, etc) 
+# from number to default excel index (e.g A -> 1, AA -> 27, etc) 
 def column_number_to_excel_index(col_number):
     col_label = ''
     quotient = col_number
